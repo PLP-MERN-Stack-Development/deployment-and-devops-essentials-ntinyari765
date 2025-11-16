@@ -1,0 +1,100 @@
+/* Minimal theme variables and base styles. Component styling moved to Tailwind utilities. */
+
+:root {
+  --color-primary-500: #6B3FA0;
+  --color-primary-600: #5A2E88;
+  --color-primary-700: #472166;
+  --bg-soft: #F3EBFF;
+  --bg-dark: #2D1B4E;
+  --color-text: #1A1A2E;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(135deg, #FDE4F0 0%, #F5D9E8 50%, #F3EBFF 100%);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+/* Keep the file intentionally small — styling is done with Tailwind classes */
+
+/* Keep the file intentionally small — but provide strong fallback styles so changes are visible
+   even if Tailwind hasn't been built. */
+
+/* Base readability */
+html, body {
+  font-size: 18px; /* larger base for immediate impact */
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Header / Navbar fallback styles */
+.site-header-plain {
+  background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 50%, #F3F4F6 100%);
+  border-bottom: 4px solid rgba(107,63,160,0.25);
+  box-shadow: 0 8px 24px rgba(107,63,160,0.12);
+}
+.site-header-plain .container { display:flex; align-items:center; justify-content:space-between; }
+.site-brand {
+  display:inline-block;
+  font-weight:900;
+  font-size:32px;
+  padding:8px 14px;
+  border-radius:14px;
+  background: linear-gradient(135deg, #6B3FA0 0%, #8B5FB3 50%, #3D1F57 100%);
+  color:white;
+  box-shadow: 0 16px 48px rgba(107,63,160,0.3), inset 0 2px 8px rgba(255,255,255,0.15);
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.nav-links { display:flex; gap:32px; align-items:center; }
+.nav-links a { color:#1A1A2E; font-size:18px; font-weight:500; padding:8px 12px; }
+.nav-links a:hover { color:#6B3FA0; font-weight:600; }
+.cta-button-plain {
+  background: #ffffff;
+  color: #6B3FA0;
+  padding:10px 20px;
+  border-radius:999px;
+  box-shadow: 0 8px 24px rgba(107,63,160,0.15);
+  font-weight:700;
+  font-size: 16px;
+  border: 2px solid #6B3FA0;
+}
+.cta-button-plain:hover { transform:translateY(-3px); box-shadow: 0 12px 32px rgba(107,63,160,0.2); }
+
+/* Cards and post previews */
+.post-card-plain {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 32px rgba(107,63,160,0.08);
+  border: 1px solid rgba(107,63,160,0.06);
+  transition: all 0.3s ease;
+}
+.post-card-plain:hover {
+  box-shadow: 0 20px 48px rgba(107,63,160,0.12);
+  transform: translateY(-2px);
+}
+
+/* Create page intro */
+.create-hero {
+  background: linear-gradient(135deg, rgba(107,63,160,0.08), rgba(255,255,255,0));
+  padding: 24px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+  border: 2px solid rgba(107,63,160,0.15);
+}
+
+/* Form card */
+.form-card-plain { background: #fff; padding:24px; border-radius:14px; box-shadow: 0 12px 32px rgba(107,63,160,0.08); border:1px solid rgba(107,63,160,0.06); }
+
+/* Footer */
+.site-footer-plain { background: linear-gradient(135deg, #2D1B4E 0%, #1A0E2E 100%); color: #fff; padding: 28px 12px; text-align:center; border-top: 2px solid rgba(107,63,160,0.3); }
+.site-footer-plain a { color: rgba(255,200,100,0.9); text-decoration:underline; font-weight:500; }
+
+@media (max-width: 640px) {
+  .site-brand { font-size: 28px; padding:6px 10px; }
+  .nav-links { gap: 12px; }
+}
