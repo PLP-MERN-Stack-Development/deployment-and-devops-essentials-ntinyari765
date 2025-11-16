@@ -1,77 +1,149 @@
-# Deployment and DevOps for MERN Applications
+# MERN Blog
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+This repository contains a simple MERN (MongoDB, Express, React, Node) blog application used for Week 7 assignments. It includes a backend API (Express + Mongoose) and a React frontend (Vite + Tailwind CSS) with a soft lilac theme.
 
-## Assignment Overview
+The live link for the MERN blog is https://deployment-and-devops-essentials-nt.vercel.app/
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+## Repository layout
 
-## Getting Started
-
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
-
-## Files Included
-
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+- `backend/` — Express API, Mongoose models, controllers, routes, middleware.
+- `frontend/` — React (Vite) frontend, Tailwind CSS, components and pages.
+- `Week7-Assignment.md` — assignment brief.
 
 ## Requirements
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+- Node.js v18+ recommended
+- npm (comes with Node)
+- MongoDB (local or Atlas)
 
-## Deployment Platforms
+## Environment
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+Create `.env` in the `backend/` folder with the following variables (or set them in your shell):
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+```
+MONGO_URI=your_mongodb_url/your-db-name
+PORT=5000
+JWT_SECRET=some_long_secret
+```
 
-## CI/CD Pipeline
+On the frontend, you can configure the API base URL with a `.env` file in `frontend/` (Vite format):
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+```
+VITE_API_URL=http://your_url/api
+```
 
-## Submission
+There is a sample `.env.example` in `backend/` and `frontend/` — copy them and fill values.
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## Install
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+Install server dependencies:
 
-## Resources
+```powershell
+cd backend
+npm install
+```
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+Install client dependencies:
+
+```powershell
+cd frontend
+npm install
+```
+
+## Run (development)
+
+1) Make sure nothing else is using port 5000. On Windows PowerShell you can stop the process with:
+
+```powershell
+#$p = Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue; if ($p) { Stop-Process -Id $p.OwningProcess -Force; Write-Output "Stopped process $($p.OwningProcess)" } else { Write-Output "No process found on port 5000" }
+```
+
+2) Start the backend (from the `backend/` folder):
+
+```powershell
+cd backend
+npm run dev
+```
+
+3) Start the client (from the `frontend/` folder) in a second terminal:
+
+```powershell
+cd frontend
+npm run dev
+```
+
+## Seed data
+
+To pre-populate categories and sample posts, run the seed script (server):
+
+```powershell
+cd frontend
+node utils/seed.js
+```
+
+This will create a few categories and example posts for local development.
+
+## API Endpoints (major)
+
+- `POST /api/auth/register` — register user (body: username, password)
+- `POST /api/auth/login` — login (body: username, password) → returns JWT
+- `GET /api/posts` — list posts
+- `GET /api/posts/:id` — get single post
+- `POST /api/posts` — create post (protected — send Authorization: Bearer <token>)
+- `PUT /api/posts/:id` — update post (protected)
+- `DELETE /api/posts/:id` — delete post (protected)
+- `GET /api/categories` — list categories
+- `POST /api/categories` — create category (protected)
+
+All responses are JSON. Errors come back with a consistent JSON shape via the error middleware.
+
+## Frontend notes
+
+- The client uses Tailwind CSS for styling and a small `theme.css` file for CSS tokens (lilac colors, radius, shadow).
+- Shared axios instance is in `frontend/src/services/api.js` and uses `import.meta.env.VITE_API_URL`.
+
+## Troubleshooting
+
+- Port in use: If the server fails to start with `EADDRINUSE :::5000`, stop the process using the port or change `PORT` in `backed/.env`.
+- MongoDB connection errors: verify your `MONGO_URI` and that MongoDB is reachable (Atlas or local).
+- Tailwind/PostCSS errors: ensure packages are installed in `frontend/` and run `npm run dev` from the `frontend/` folder.
+
+## Next improvements (suggested)
+
+- Add request validation (Joi/express-validator) for API endpoints.
+- Add file uploads (images) with `multer` or Cloudinary.
+- Add tests (Jest + Supertest for server, React Testing Library for client).
+- Add ESLint/Prettier and GitHub Actions for CI.
+
+## License
+
+This repository is provided for learning and assignment purposes.
+
+---
+
+
+## Project Structure
+
+```
+mern-blog/
+├── client/                 # React front-end
+│   ├── public/             # Static files
+│   ├── src/                # React source code
+│   │   ├── components/     # Reusable components
+│   │   ├── pages/          # Page components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── services/       # API services
+│   │   ├── context/        # React context providers
+│   │   └── App.jsx         # Main application component
+│   └── package.json        # Client dependencies
+├── server/                 # Express.js back-end
+│   ├── config/             # Configuration files
+│   ├── controllers/        # Route controllers
+│   ├── models/             # Mongoose models
+│   ├── routes/             # API routes
+│   ├── middleware/         # Custom middleware
+│   ├── utils/              # Utility functions
+│   ├── server.js           # Main server file
+│   └── package.json        # Server dependencies
+└── README.md               # Project documentation
+```
