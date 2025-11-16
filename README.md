@@ -9,6 +9,7 @@ The live link for the MERN blog is https://deployment-and-devops-essentials-nt.v
 - `backend/` — Express API, Mongoose models, controllers, routes, middleware.
 - `frontend/` — React (Vite) frontend, Tailwind CSS, components and pages.
 - `Week7-Assignment.md` — assignment brief.
+- `README.md`  — The readme file.
 
 ## Requirements
 
